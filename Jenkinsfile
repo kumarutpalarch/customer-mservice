@@ -1,7 +1,8 @@
-node () {
+pipeline {
+    node () {
         stage ('Code Checkout')
         {
-            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ritubgp/customer-openshift-service']]]
+            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/kumarutpalarch/customer-mservice']]]
         }
         stage ('Build')
         {
@@ -55,7 +56,7 @@ node () {
                 }
             }
         }
-        stage('Deploy STAGE') {
+        stage('Deploy') {
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
@@ -70,4 +71,5 @@ node () {
               }
             }
           }
+    }
 }
